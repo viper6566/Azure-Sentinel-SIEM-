@@ -59,7 +59,12 @@ This project is an exposition of my process to establish Azure Sentinel (SIEM) a
 <br />
 <p align="center">
 <b>Once everything is filled in click “Next: Disk” button, and then “Next: Networking”. Under “Networking” choose “Advanced” for NIC network security group. (This will be like a firewall for your VM). Press “Create a new one” to create your firewall. </b> <br/>
-<img src="https://i.imgur.com/Tsh6RCn.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
+<img src="https://i.imgur.com/hVzyXMk.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
+<br />
+<br />
+<br />
+ 
+ <img src="https://i.imgur.com/Tsh6RCn.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
 <br />
 <br />
 <br />
@@ -70,68 +75,86 @@ This project is an exposition of my process to establish Azure Sentinel (SIEM) a
 <img src="https://i.imgur.com/povS00s.png" height="80%" width="80%" alt="Rename"/>
 <br />
 <br />
-<b>Now I’ve configured the Internal network adapter and assigned it an IP address based on the diagram above (172.16.0.1) and I do not need to give it a default gateway as the DC is the gateway. As for the DNS server, I assigned an IP based on the diagram because when we install Active Directory it will install DNS. I set it as a loopback address so it pings itself.</b> <br/>
-<img src="https://imgur.com/xMM9gt2.jpg" height="80%" width="80%" alt="IP"/>
+ <img src="https://i.imgur.com/LCkBH0R.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
 <br />
 <br />
-<b>Now that the NICs are differentiated, I renamed the VM as Practise. This forces a restart</b> <br/>
-<img src="https://imgur.com/tKcm0DH.jpg" height="80%" width="80%" alt="Renaming the PC"/>
+<br />
+<b>Whilst the virtual machine is being created, we shall establish a log analytics workspace. Ensure that you complete the "instance details" section. Once all fields are populated, click on the "Create and Review" button followed by the "Create" button to proceed..</b> <br/>
+ <img src="https://i.imgur.com/nqiGUMk.png" height="80%" width="80%" alt="Rename"/>
 <br />
 <br />
-<b>After restarting, I installed Active Directory Domain Services through Server Manager and set up the server as the domain immediately. When the server is promoted to a domain, it forces a restart.</b> <br/>
-
-<img src="https://imgur.com/t0DUH6T.jpg" height="80%" width="80%" alt="AD installation"/>
+<img src="https://i.imgur.com/u7mpbHD.png" height="80%" width="80%" alt="IP"/>
 <br />
+<br />
+<b>In the search bar, search Microsoft Defender for cloud > Environment settings > Your subscription (In my case is Azure subscription 1) > law-behive (the speling again :D )</b><br/>
+<img src="https://i.imgur.com/kMbHYjH.png" height="80%" width="80%" alt="Renaming the PC"/>
+<br />
+<br />
+<b>You will turn on the server button, and save the changes. From the left panel click "Data collection" option.</b><br/>
+<img src="https://i.imgur.com/9NAcyIK.png" height="80%" width="80%" alt="Renaming the PC"/>
+<br />
+<br />
+<img src="https://i.imgur.com/DAymgev.png" height="80%" width="80%" alt="Renaming the PC"/>
+<br />
+<br />
+<b>Under "Data collection" choose "All Events" and save the option.</b> <br/>
+<img src="https://i.imgur.com/2VNCIEx.png" height="80%" width="80%" alt="AD installation"/>
+<br />
+<b>Return to "log analytics workspace" and choose your VM. You can see in the picture the status says "Not connected". Click on the name of your VM and choose "connect"<br/>
 <p align="center">
- <img src="https://imgur.com/7ug890z.jpg" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
+<img src="https://i.imgur.com/MPHCN62.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
  <p align="center">
 <br />
 <br />
+ <img src="https://i.imgur.com/Y7BGujP.png" height="80%" width="80%" alt="Configuring the Network Adapter for the Domain Controller Virtual Machine"/>
+ <p align="center">
+<br />
+<br />
+<b>Next, we will create Azure Sentinel. In the search bar, seach for Azure Snetinel.This is our SIEM that we will use to visualize the attack data.</b> <br/>
 <p align="center">
-<b>Using the built-in Admin account, I will create a dedicated domain Admin account, granting it Domain Admin permissions on AD. </b> <br/>
+ <img src="https://i.imgur.com/VPphyHB.png" height="80%" width="80%" alt="Creating Admin account"/>
+<br />
+<br />
+<p align="center">
+<b>Now we will add the Sentinel to a workspace.</b> <br/>
 </p>
 <p align="center">
- <img src="https://imgur.com/HG50Cdg.jpg" height="80%" width="80%" alt="Creating Admin account"/>
+<img src="https://i.imgur.com/APLdEo3.png" height="80%" width="80%" alt="Config Remote Access"/>
+<br />
+<br />
+ <b>We shall allow the Sentinel to proceed with its loading task. Following, we shall access the Remote Desk and endeavor to remotely connect to the Virtual Machine. (Need I remind you of the credentials? They shall now prove useful. :) ) Upon returning to the Virtual Machine, we shall copy the IP address.</b>
+ <img src="https://i.imgur.com/udldKyK.png" height="80%" width="80%" alt="Config Remote Access"/>
+<br />
+<br />
+   <img src="https://i.imgur.com/dWc5i0d.png" height="80%" width="80%" alt="Config Remote Access"/>
+<br />
+<br />
+   <img src="https://i.imgur.com/PDqgT5u.png" height="80%" width="80%" alt="Config Remote Access"/>
 <br />
 <br />
 <p align="center">
-<b>Now I need to install RAS/NAT (incl Routing) for my Windows 10 client to gain access to the internet through the internal network via the DC.</b> <br/>
+<b>Entering the virtual machine, we shall navigate to the Event Viewer in order to inspect the existing logs. Please take note that the initial launch of the Event Viewer may require an extended period of loading time due to its inherent sluggishness.</b> <br/>
 </p>
 <p align="center">
- <img src="https://imgur.com/CKYDBRh.jpg" height="80%" width="80%" alt="Installing RAS"/>
+ <img src="https://i.imgur.com/2jowSzg.png" height="80%" width="80%" alt="Install DCHP"/>
+<br />
+<br />
+ <img src="https://i.imgur.com/Zn87cWV.png" height="80%" width="80%" alt="Install DCHP"/>
 <br />
 <br />
 <p align="center">
-<b>Now that the role is installed, I need to configure the Routing and Remote Access under tools in Server Manager. Click Tools in Server Manager and Right click ‘Practice’ and configure and enable routing and remote access. Under configuration, select NAT and the external NIC (the internet).</b> <br/>
+<b>Just a peak inside a log. I failed to loggon purposely, just to be able to have a sample to present here.</b> <br/>
 </p>
 <p align="center">
-<img src="https://imgur.com/9sdMtQs.jpg" height="80%" width="80%" alt="Config Remote Access"/>
+<img src="https://i.imgur.com/He4SAbs.png" height="80%" width="80%" alt="Install DCHP"/>
+<br />
+ <b>If you copy the IP you get into the failed log and past it into IPGeolocation (get the link from the link section) you will see the location of the attack.</b>
+ <img src="https://i.imgur.com/fRaVnMg.png" height="80%" width="80%" alt="Install DCHP"/>
 <br />
 <br />
-   <img src="https://imgur.com/xBwrlKz.jpg" height="80%" width="80%" alt="Config Remote Access"/>
-<br />
-<br />
-   <img src="https://imgur.com/6ArB8q6.jpg" height="80%" width="80%" alt="Config Remote Access"/>
-<br />
-<br />
-   <img src="https://imgur.com/cWGOFtd.jpg" height="80%" width="80%" alt="Config Remote Access"/>
-<br />
-<br />
+ <b>We will now utilize Powershell to determine the source location from which the attacker is attempting to gain access.</b>
 <p align="center">
-<b>After Remote Access has been configured, install the DHCP Server. This will allow our Windows 10 clients to be assigned an IP address and gain access to the internet..</b> <br/>
-</p>
-<p align="center">
- <img src="https://imgur.com/VpQuR04.jpg" height="80%" width="80%" alt="Install DCHP"/>
-<br />
-<br />
-<p align="center">
-<b>The purpose of the DHCP server is to allow machines on the network to automatically be assigned an IP address. The scope created will assign IP addresses in a range, that being 172.16.0.100-200 so the DHCP will effectively be able to give out 100 IP addresses (you can also configure the lease time of the IP addresses for the client machines so that the IP cannot be used by other devices).</b> <br/>
-</p>
-<p align="center">
-<img src="https://imgur.com/JTjhG5n.jpg" height="80%" width="80%" alt="Install DCHP"/>
-<br />
-<p align="center">
-<img src="https://imgur.com/4MNAjEQ.jpg" height="80%" width="80%" alt="Install DCHP"/>
+<img src="" height="80%" width="80%" alt="Install DCHP"/>
 <br />
 <br />
 <p align="center">
